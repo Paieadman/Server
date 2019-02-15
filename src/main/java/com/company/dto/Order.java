@@ -1,20 +1,30 @@
 package com.company.dto;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     private int id;
     private int userid;
     private String dateorder;
     private int idstatus;
-    private int iddisheslist;
-    private int cost;
+    private String dishes;
 
-    public Order(int id, int userid, String dateorder, int idstatus, int iddisheslist, int cost) {
+    public Order(){
+    }
+
+    public Order(int id, int userid, String dateorder, int idstatus, String dishes) {
         this.id = id;
         this.userid = userid;
         this.dateorder = dateorder;
         this.idstatus = idstatus;
-        this.iddisheslist = iddisheslist;
-        this.cost = cost;
+        this.dishes = dishes;
+    }
+
+    public Order(int userid, String dateorder, int idstatus, String dishes) {
+        this.userid = userid;
+        this.dateorder = dateorder;
+        this.idstatus = idstatus;
+        this.dishes = dishes;
     }
 
     public int getId() {
@@ -49,19 +59,22 @@ public class Order {
         this.idstatus = idstatus;
     }
 
-    public int getIddisheslist() {
-        return iddisheslist;
+    public String getDishes() {
+        return dishes;
     }
 
-    public void setIddisheslist(int iddisheslist) {
-        this.iddisheslist = iddisheslist;
+    public void setDishes(String dishes) {
+        this.dishes = dishes;
     }
 
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userid=" + userid +
+                ", dateorder='" + dateorder + '\'' +
+                ", idstatus=" + idstatus +
+                ", dishes='" + dishes + '\'' +
+                '}';
     }
 }

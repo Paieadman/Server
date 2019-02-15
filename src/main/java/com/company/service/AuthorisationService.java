@@ -3,19 +3,26 @@ package com.company.service;
 import com.company.DBConnection;
 import org.springframework.stereotype.Controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 @Controller
 public class AuthorisationService {
+    DBConnection dbConnection;
     public AuthorisationService(){
 
     }
 
     public String authorisation(String login, String pass){
-        DBConnection dBConnection = new DBConnection();
-        Statement statement = dBConnection.dbConnection();
+        Connection connection = dbConnection.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String select = "select userpass from userreg where userlogin = '"+login+"'";
         System.out.println(select);
         try {

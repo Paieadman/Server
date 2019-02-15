@@ -3,19 +3,26 @@ package com.company.service;
 import com.company.DBConnection;
 import org.springframework.stereotype.Controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 @Controller
 public class RegistrationService {
+    DBConnection dbConnection;
     public RegistrationService(){
 
     }
 
     public String registration(String login, String pass){
-        DBConnection dBConnection = new DBConnection();
-        Statement statement = dBConnection.dbConnection();
+        Connection connection = dbConnection.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String select = "select userlogin from userreg where userlogin = '"+login+"'";
         try {
             ResultSet rs = statement.executeQuery(select);

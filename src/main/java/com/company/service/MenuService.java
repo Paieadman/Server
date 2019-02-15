@@ -4,6 +4,7 @@ import com.company.DBConnection;
 import com.company.dto.Dish;
 import org.springframework.stereotype.Controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,12 +14,19 @@ import java.util.List;
 
 @Controller
 public class MenuService {
+    DBConnection dbConnection;
     public MenuService() {
+        dbConnection = new DBConnection();
     }
 
     public List<Dish> getMenu(){
-        DBConnection dBConnection = new DBConnection();
-        Statement statement = dBConnection.dbConnection();
+        Connection connection = dbConnection.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM DISH");
             List<Dish> lst = new ArrayList<Dish>();
