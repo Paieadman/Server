@@ -24,4 +24,7 @@ public class OrdersController {
 
     @RequestMapping("/orders/{id}/remove")
     public String remove(@PathVariable int id){ return orderService.removeOrder(id);}
+
+    @RequestMapping("/orders{id}/update")
+    public String edit(@PathVariable int id, String value, String pos){ return orderService.updateOrder(id,value,pos);}
 }

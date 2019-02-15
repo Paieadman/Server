@@ -18,7 +18,7 @@ public class OrderService {
     public OrderService(){
         dbconnection = new DBConnection();
     }
-    DBConnection dbconnection;
+    private DBConnection dbconnection;
 
     public List<Order> getOrders(){
 
@@ -74,13 +74,22 @@ public class OrderService {
         return "deleted";
     }
 
-    public String updateOrder(int id, String value){
+    public String updateOrder(int id, String value, String pos){
         Connection connection = dbconnection.getConnection();
         try{
             Statement statement = connection.createStatement();
-            String str = "update kafe.order set "
+            switch (pos){
+                case "1": { pos="idorder"; break;}
+                case "2": { pos="iduser"; break;}
+                case "3": { pos="dateorder"; break;}
+                case "4": { pos="idstatus"; break;}
+                case "5": { pos="orderList"; break;}
+            }
+            String str = "update kafe.order set "+pos+"="+value+ " where id="+id;
+            return "ok";
         } catch (SQLException e){
             e.printStackTrace();
         }
+        return "not ok";
     }
 }
