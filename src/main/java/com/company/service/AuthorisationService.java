@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.DBConnection;
+import com.company.ConnectionFactory;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Connection;
@@ -10,13 +10,13 @@ import java.sql.Statement;
 
 @Controller
 public class AuthorisationService {
-    DBConnection dbConnection;
+    ConnectionFactory connectionFactory;
     public AuthorisationService(){
 
     }
 
     public String authorisation(String login, String pass){
-        Connection connection = dbConnection.getConnection();
+        Connection connection = connectionFactory.getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();

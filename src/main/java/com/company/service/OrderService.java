@@ -1,7 +1,6 @@
 package com.company.service;
-import com.company.DBConnection;
+import com.company.ConnectionFactory;
 import com.company.dto.Order;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Connection;
@@ -10,22 +9,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 public class OrderService {
+    private Connection dbconnection;
+
     public OrderService(){
-        dbconnection = new DBConnection();
+        dbconnection = ConnectionFactory.getConnection();
     }
-    private DBConnection dbconnection;
 
     public List<Order> getOrders(){
-
-        Connection connection = dbconnection.getConnection();
         Statement statement = null;
         try {
-            statement = connection.createStatement();
+            statement = dbconnection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,9 +45,8 @@ public class OrderService {
 
     public Order addOrder(Order order) {
         System.out.println(order.toString());
-        Connection connection = dbconnection.getConnection();
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = dbconnection.createStatement();
             String str = "" +
                     "insert into kafe.order (iduser,dateorder,idstatus,orderList) values " +
                     "("+2+","+"'2000-11-11 3:12:11'"+","+"1"+","+"'"+order.getDishes()+"'"+")";
@@ -63,9 +59,8 @@ public class OrderService {
     }
 
     public String removeOrder(int id){
-        Connection connection = dbconnection.getConnection();
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = dbconnection.createStatement();
             String str = "delete from kafe.orders where idorder="+id;
             statement.executeUpdate(str);
         } catch (SQLException e) {
@@ -75,9 +70,8 @@ public class OrderService {
     }
 
     public String updateOrder(int id, String value, String pos){
-        Connection connection = dbconnection.getConnection();
         try{
-            Statement statement = connection.createStatement();
+            Statement statement = dbconnection.createStatement();
             switch (pos){
                 case "1": { pos="idorder"; break;}
                 case "2": { pos="iduser"; break;}

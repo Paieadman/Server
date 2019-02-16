@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.DBConnection;
+import com.company.ConnectionFactory;
 import com.company.dto.Dish;
 import org.springframework.stereotype.Controller;
 
@@ -14,13 +14,13 @@ import java.util.List;
 
 @Controller
 public class MenuService {
-    DBConnection dbConnection;
+    ConnectionFactory connectionFactory;
     public MenuService() {
-        dbConnection = new DBConnection();
+        connectionFactory = new ConnectionFactory();
     }
 
     public List<Dish> getMenu(){
-        Connection connection = dbConnection.getConnection();
+        Connection connection = connectionFactory.getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();
