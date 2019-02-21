@@ -61,7 +61,7 @@ public class OrderService {
     public String removeOrder(int id){
         try {
             Statement statement = dbconnection.createStatement();
-            String str = "delete from kafe.orders where idorder="+id;
+            String str = "delete from kafe.order where idorder="+id;
             statement.executeUpdate(str);
         } catch (SQLException e) {
             e.printStackTrace();
