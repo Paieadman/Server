@@ -1,15 +1,17 @@
 package com.company;
+import com.company.entity.DishEntity;
+import com.company.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.LinkedList;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
-public class helloController {
+public class HelloController {
 
     @Autowired
-    private CustomerRepository repository;
+    private DishRepository dishRepository;
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -20,9 +22,9 @@ public class helloController {
                 String.format(template, name));
     }
 
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+    @RequestMapping("/heyhey")
+    public Iterable<DishEntity> index() {
+        return dishRepository.findAll();
     }
 
     @RequestMapping("/hi")
@@ -36,35 +38,7 @@ public class helloController {
         return "great";
     }
 
-    @RequestMapping("/getCustomer")
-    public String dataCustomer()
-    {
-        LinkedList<Customer> customerList = new LinkedList<Customer>();
-        repository.deleteAll();
 
-        // save a couple of customers
-        repository.save(new Customer("Alice", "Smith"));
-        repository.save(new Customer("Bob", "Smith"));
-
-        // fetch all customers
-        System.out.println("Customers found with findAll():");
-        System.out.println("-------------------------------");
-        for (Customer customer : repository.findAll()) {
-            customerList.add(customer);
-        }
-        return customerList.toString();
-    }
-
-    @RequestMapping("/addCustomer")
-    public String addCustomer(String firstName, String secondName)
-    {
-//localhost80880/addCustomer
-        // save a couple of customers
-        repository.save(new Customer(firstName, secondName));
-
-        return firstName+secondName+" customer added sucsessfully";
-    }
-/*
     @RequestMapping("/menu")
     public String menu()
     {
@@ -126,6 +100,5 @@ public class helloController {
     }
 
 
-*/
 
 }//how to send ajax request via jquery
